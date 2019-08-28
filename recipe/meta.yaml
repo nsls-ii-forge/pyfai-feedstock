@@ -1,14 +1,13 @@
 {% set name = "pyfai" %}
 {% set version = "0.18.0" %}
-{% set sha256 = "4637eaa40a5a3b10c97ef0fea9e6f935c4ae93eb8df48643d567db7796cb3ef8" %}
+{% set sha256 = "355a9722c928ef1904be8f1487c5f4ef52eebb3728e069e111d8e8a9a43b2b7b" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: v{{ version }}.tar.gz
-  url: https://github.com/silx-kit/pyFAI/archive/v{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
@@ -29,7 +28,7 @@ build:
     - pyFAI-recalib = pyFAI.app.recalib:main
     - pyFAI-saxs = pyFAI.app.saxs:main
     - pyFAI-waxs = pyFAI.app.waxs:main
-  skip: True  # [py2k and win]
+  skip: True  # [py<36]
 
 requirements:
   build:
@@ -37,24 +36,18 @@ requirements:
     - {{ compiler('cxx') }}
   host:
     - python
-    - setuptools
-    - numpy
     - cython
-    - scipy
-    - fabio
-    - h5py
     - pip
-
   run:
     - python
-    - {{ pin_compatible('numpy') }}
     - fabio
-    - scipy
     - h5py
-    - pillow
     - lxml
     - matplotlib
+    - pillow
+    - scipy
     - silx
+    - {{ pin_compatible('numpy') }}
 
 test:
   imports:
@@ -62,16 +55,14 @@ test:
     - pyFAI.test
     - pyFAI.third_party
     - pyFAI.gui
-# Bring these back when CDT/yum stuff is done
-#  commands:
-#    - pyFAI-calib -h
+  commands:
+    - pyFAI-calib -h
 
 about:
   home: https://github.com/silx-kit/pyFAI/
   license: GPL-3
-  license_file: LICENSES.txt
+  license_file: copyright
   summary: 'Python implementation of fast azimuthal integration'
-
   description: |
     pyFAI is an azimuthal integration library that tries to be fast (as fast
     as C and even more using OpenCL and GPU). It is based on histogramming of
@@ -83,10 +74,3 @@ about:
     reference compound.
   doc_url: http://pythonhosted.org/pyFAI/
   dev_url: https://github.com/silx-kit/pyFAI/
-
-extra:
-  recipe-maintainers:
-    - CJ-Wright
-    - tacaswell
-    - chiahaoliu
-    - tschoonj
