@@ -39,6 +39,7 @@ requirements:
   host:
     - python
     - cython
+    - numpy
     - pip
   run:
     - python
