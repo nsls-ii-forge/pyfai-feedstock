@@ -1,0 +1,92 @@
+{% set name = "pyfai" %}
+{% set version = "0.18.0" %}
+{% set sha256 = "4637eaa40a5a3b10c97ef0fea9e6f935c4ae93eb8df48643d567db7796cb3ef8" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  fn: v{{ version }}.tar.gz
+  url: https://github.com/silx-kit/pyFAI/archive/v{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  number: 1
+  entry_points:
+    - check_calib = pyFAI.app.check_calib:main
+    - detector2nexus = pyFAI.app.detector2nexus:main
+    - diff_map = pyFAI.app.diff_map:main
+    - diff_tomo = pyFAI.app.diff_tomo:main
+    - eiger-mask = pyFAI.app.eiger_mask:main
+    - MX-calibrate = pyFAI.app.mx_calibrate:main
+    - pyFAI-average = pyFAI.app.average:main
+    - pyFAI-benchmark = pyFAI.app.benchmark:main
+    - pyFAI-calib = pyFAI.app.calib:main
+    - pyFAI-calib2 = pyFAI.app.calib2:main
+    - pyFAI-drawmask = pyFAI.app.drawmask:main
+    - pyFAI-integrate = pyFAI.app.integrate:main
+    - pyFAI-recalib = pyFAI.app.recalib:main
+    - pyFAI-saxs = pyFAI.app.saxs:main
+    - pyFAI-waxs = pyFAI.app.waxs:main
+  skip: True  # [py2k and win]
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    - python
+    - setuptools
+    - numpy
+    - cython
+    - scipy
+    - fabio
+    - h5py
+    - pip
+
+  run:
+    - python
+    - {{ pin_compatible('numpy') }}
+    - fabio
+    - scipy
+    - h5py
+    - pillow
+    - lxml
+    - matplotlib
+    - silx
+
+test:
+  imports:
+    - pyFAI
+    - pyFAI.test
+    - pyFAI.third_party
+    - pyFAI.gui
+# Bring these back when CDT/yum stuff is done
+#  commands:
+#    - pyFAI-calib -h
+
+about:
+  home: https://github.com/silx-kit/pyFAI/
+  license: GPL-3
+  license_file: LICENSES.txt
+  summary: 'Python implementation of fast azimuthal integration'
+
+  description: |
+    pyFAI is an azimuthal integration library that tries to be fast (as fast
+    as C and even more using OpenCL and GPU). It is based on histogramming of
+    the 2theta/Q positions of each (center of) pixel weighted by the intensity
+    of each pixel, but parallel version uses a SparseMatrix-DenseVector
+    multiplication. Neighboring output bins get also a contribution of pixels
+    next to the border thanks to pixel splitting. Finally pyFAI provides also
+    tools to calibrate the experimental setup using Debye-Scherrer rings of a
+    reference compound.
+  doc_url: http://pythonhosted.org/pyFAI/
+  dev_url: https://github.com/silx-kit/pyFAI/
+
+extra:
+  recipe-maintainers:
+    - CJ-Wright
+    - tacaswell
+    - chiahaoliu
+    - tschoonj
