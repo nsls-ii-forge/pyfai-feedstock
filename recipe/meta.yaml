@@ -1,4 +1,4 @@
-{% set name = "pyfai" %}
+{% set name = "pyFAI" %}
 {% set version = "0.18.0" %}
 {% set sha256 = "355a9722c928ef1904be8f1487c5f4ef52eebb3728e069e111d8e8a9a43b2b7b" %}
 
@@ -11,7 +11,9 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv --global-option "build" --global-option "--no-openmp"  # [osx]
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv  # [not osx]
   entry_points:
     - check_calib = pyFAI.app.check_calib:main
     - detector2nexus = pyFAI.app.detector2nexus:main
@@ -37,6 +39,7 @@ requirements:
   host:
     - python
     - cython
+    - numpy
     - pip
   run:
     - python
