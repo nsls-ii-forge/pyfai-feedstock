@@ -1,4 +1,4 @@
-{% set name = "pyfai" %}
+{% set name = "pyFAI" %}
 {% set version = "0.18.0" %}
 {% set sha256 = "355a9722c928ef1904be8f1487c5f4ef52eebb3728e069e111d8e8a9a43b2b7b" %}
 
