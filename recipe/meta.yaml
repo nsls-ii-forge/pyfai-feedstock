@@ -11,9 +11,8 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv --global-option "build" --global-option "--no-openmp"  # [osx]
-  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv  # [not osx]
+  number: 1
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
   entry_points:
     - check_calib = pyFAI.app.check_calib:main
     - detector2nexus = pyFAI.app.detector2nexus:main
