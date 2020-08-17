@@ -1,6 +1,6 @@
 {% set name = "pyFAI" %}
-{% set version = "0.18.0" %}
-{% set sha256 = "355a9722c928ef1904be8f1487c5f4ef52eebb3728e069e111d8e8a9a43b2b7b" %}
+{% set version = "0.19.0" %}
+{% set sha256 = "4dcbc92470997b5002d5626da4df428ab12efcfcec437d4cb001f41141665774" %}
 
 package:
   name: {{ name|lower }}
@@ -11,7 +11,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
   entry_points:
     - check_calib = pyFAI.app.check_calib:main
@@ -29,7 +29,7 @@ build:
     - pyFAI-recalib = pyFAI.app.recalib:main
     - pyFAI-saxs = pyFAI.app.saxs:main
     - pyFAI-waxs = pyFAI.app.waxs:main
-  skip: True  # [py<36]
+  skip: true  # [py<36]
 
 requirements:
   build:
@@ -64,7 +64,7 @@ about:
   home: https://github.com/silx-kit/pyFAI/
   license: GPL-3
   license_file: copyright
-  summary: 'Python implementation of fast azimuthal integration'
+  summary: Python implementation of fast azimuthal integration
   description: |
     pyFAI is an azimuthal integration library that tries to be fast (as fast
     as C and even more using OpenCL and GPU). It is based on histogramming of
